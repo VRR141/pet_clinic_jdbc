@@ -20,4 +20,9 @@ public interface PetJdbcRepository extends CrudRepository<PetAggregate, Long> {
             SELECT * FROM pet WHERE owner_id = :id
             """)
     Collection<PetAggregate> getByOwnerIdentifier(Long id);
+
+    @Query("""
+            SELECT * FROM pet where id in (:ids)
+            """)
+    Collection<PetAggregate> getByIdentifierIn(Collection<Long> ids);
 }

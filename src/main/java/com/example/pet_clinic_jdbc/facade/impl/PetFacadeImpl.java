@@ -9,6 +9,8 @@ import com.example.pet_clinic_jdbc.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+
 @Component
 @RequiredArgsConstructor
 public class PetFacadeImpl implements PetFacade {
@@ -35,5 +37,11 @@ public class PetFacadeImpl implements PetFacade {
         var pet = mapper.map(dto);
         pet = petService.updatePet(pet);
         return mapper.mapIgnoreVisits(pet);
+    }
+
+    @Override
+    public Collection<PetDto> getPets(Collection<Long> ids) {
+        final var pets = petService.getPetsByIdentifiers(ids);
+        return pets.stream().map(mapper::mapIgnoreVisits).toList();
     }
 }

@@ -18,6 +18,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 
 @Component
@@ -82,18 +83,6 @@ public class PetServiceImpl implements PetService {
         }
 
         return result;
-
-
-//        var pet = petJdbcRepository
-//                .findById(id)
-//                .map(this::map)
-//                .orElseThrow(() -> new EntityNotExistException(Pet.class, id));
-//
-//        var visits = visitJdbcRepository.getVisitByPetIdentifier(id);
-//
-//        pet.setVisits(visits.stream().map(this::map).toList());
-//
-//        return pet;
     }
 
     @Override
@@ -126,6 +115,12 @@ public class PetServiceImpl implements PetService {
         }
 
         return map(persisted);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Collection<Pet> getPetsByIdentifiers(Collection<Long> ids) {
+        return petJdbcRepository.getByIdentifierIn(ids).stream().map(this::map).toList();
     }
 
     private Visit map(VisitAggregate agr) {
