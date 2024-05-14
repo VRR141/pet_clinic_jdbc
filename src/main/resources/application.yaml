@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: pet_clinic_jpa
+
+  liquibase:
+    change-log: db/changelog/changelog-master.yaml
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pet_clinic
+    username: postgres
+    password: q1w2e3r4
+
+server:
+  port: 8099
+  servlet:
+    context-path: /api/clinic/v1
+#
+#logging:
+#  level:
+#    org.springframework.jdbc.core: TRACE
