@@ -14,7 +14,19 @@ server:
   port: 8099
   servlet:
     context-path: /api/clinic/v1
-#
-#logging:
-#  level:
-#    org.springframework.jdbc.core: TRACE
+
+management:
+  server:
+    port: 8901
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
